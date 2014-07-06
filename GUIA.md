@@ -68,7 +68,93 @@
 (venv)$ 1.6.5
 ```
 
-#### 2.2. Creando un proyecto con **Django**
+#### 2.2. Creando un proyecto con Django
 
 :  Para crear un nuevo proyecto de **Django**, vaya a su directorio de código (es decir, el directorio `<workspace>`), y ejecute el siguiente comando:
-:  * `(venv)$ django-admin.py startproject sales`
+:  * `(venv)$ django-admin.py startproject food_store`
+:  Para probar el proyecto utilizar el `manage.py`, ejecutar el siguiente comando:
+:  * `(venv)$ python manage.py runserver`
+
+
+#### 2.3. Creando una aplicación dentro de un proyecto Django
+
+:  Un proyecto de Django es una colección de configuraciones y aplicaciones que componen una aplicación web determinada o página web:
+:  * `(venv)$ django-admin.py startapp sales`
+:  Para probar el proyecto de nuevo se sigue utilizando el script `manage.py`:
+:  * `(venv)$ python manage.py runserver`
+La aplicación no debe arrojar errores pues no ha sido instalada.
+
+##### 2.3.1. Instalando aplicación al proyecto
+
+El comando `startapp` crea un nuevo directorio en la raíz del proyecto. Como era de esperar, este directorio se llama `sales`:
+
+```
+sales/
+	|-- __init__.py
+	|-- admin.py
+	|-- models.py
+	|-- tests.py
+	`-- views.py
+```
+Las aplicaciones se deben "instalar" en el script `settings.py` en la tupla `INSTALLED_APPS` de la siguiente manera:
+```python
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'sales',
+)
+```
+
+##### 2.3.2. Trabajando con el Modelo de `sales`
+
+:  Con base en la información creamos los diferentes modelos para la aplicación `sales`:
+     : * **Categories**: los detalles de la categoria para los productos
+     : * **Suppliers**: Referente a los proveedores de los productos
+     : * **Products**: Los productos que vende la tienda
+     : * **Orders**: Las ordenes que se generan cuando se compra
+     : * **OrderDetail**: Detalles de la orden de compra
+
+:  El siguiente es el `models.py` de la aplicación `sales`
+
+```python
+# -*- coding:utf-8 -*-
+# models.py
+from django.db import models
+
+class Categories(models.Model):
+	name = models.CharField(max_length=255)
+	description = models.TextField(null=True, blank=True)
+	picture = models.ImageField(upload_to="images")
+	posted_on = models.DateTimeField(auto_now_add=True)
+
+class Suppliers(models.Model):
+	name = models.CharField(max_length=255)
+	description = models.TextField(null=True, blank=True)
+	address = models.CharField(max_length=255)
+	phone = models.CharField(max_length=12)
+	posted_on = models.DateTimeField(auto_now_add=True)
+
+class Products(models.Model):
+	name = models.CharField(max_length=255)
+	value = models.PositiveIntegerField()
+	category = models.ForeignKey(Categories)
+	supplier = mdoels.ForeignKey(Suppliers)
+	unit_price = models.PositiveIntegerField()
+	units_in_stock = models.PositiveIntegerField()
+	discontinued = models.BooleanField(default=True)
+	posted_on = models.DateTimeField(auto_now_add=True)
+
+class Orders(models.Model):
+	description = models.TextField(null=True, blank=True)
+	created_on = models.DateTimeField(auto_now_add=True)
+
+class OrderDetail(models.Model):
+	order = models.ForeignKey(Orders)
+	quantity = models.PositiveIntegerField()
+	discount = models.PositiveIntegerField(default=0)
+	created_on = models.DateTimeField(auto_now_add=True)
+```

@@ -253,12 +253,133 @@ body{font-size:16px;}
 (venv)$ 1.6.5
 </code></pre>
 
-<h4 id="2-2-creando-un-proyecto-con-django">2.2. Creando un proyecto con <strong>Django</strong></h4>
+<h4 id="2-2-creando-un-proyecto-con-django">2.2. Creando un proyecto con Django</h4>
 <dl>
 <dd>Para crear un nuevo proyecto de <strong>Django</strong>, vaya a su directorio de código (es decir, el directorio <code>&lt;workspace&gt;</code>), y ejecute el siguiente comando:</dd>
 <dd>
 <ul>
-<li><code>(venv)$ django-admin.py startproject sales</code></li>
+<li><code>(venv)$ django-admin.py startproject food_store</code></li>
 </ul>
 </dd>
-</dl></body></html>
+<dd>
+<p>Para probar el proyecto utilizar el <code>manage.py</code>, ejecutar el siguiente comando:</p>
+</dd>
+<dd>
+<ul>
+<li><code>(venv)$ python manage.py runserver</code></li>
+</ul>
+</dd>
+</dl>
+<h4 id="2-3-creando-una-aplicación-dentro-de-un-proyecto-django">2.3. Creando una aplicación dentro de un proyecto Django</h4>
+<dl>
+<dd>Un proyecto de Django es una colección de configuraciones y aplicaciones que componen una aplicación web determinada o página web:</dd>
+<dd>
+<ul>
+<li><code>(venv)$ django-admin.py startapp sales</code></li>
+</ul>
+</dd>
+<dd>
+<p>Para probar el proyecto de nuevo se sigue utilizando el script <code>manage.py</code>:</p>
+</dd>
+<dd>
+<ul>
+<li><code>(venv)$ python manage.py runserver</code>
+La aplicación no debe arrojar errores pues no ha sido instalada.</li>
+</ul>
+</dd>
+</dl>
+<h5 id="2-3-1-instalando-aplicación-al-proyecto">2.3.1. Instalando aplicación al proyecto</h5>
+<p>El comando <code>startapp</code> crea un nuevo directorio en la raíz del proyecto. Como era de esperar, este directorio se llama <code>sales</code>:</p>
+<pre><code>sales/
+    |-- __init__.py
+    |-- admin.py
+    |-- models.py
+    |-- tests.py
+    `-- views.py
+</code></pre>
+
+<p>Las aplicaciones se deben "instalar" en el script <code>settings.py</code> en la tupla <code>INSTALLED_APPS</code> de la siguiente manera:</p>
+<pre><code class="python">INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'sales',
+)
+</code></pre>
+
+<h5 id="2-3-2-trabajando-con-el-modelo-de-sales">2.3.2. Trabajando con el Modelo de <code>sales</code></h5>
+<dl>
+<dd>
+<dl>
+<dt>Con base en la información creamos los diferentes modelos para la aplicación <code>sales</code>:</dt>
+<dd>
+<ul>
+<li><strong>Categories</strong>: los detalles de la categoria para los productos</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><strong>Suppliers</strong>: Referente a los proveedores de los productos</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><strong>Products</strong>: Los productos que vende la tienda</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><strong>Orders</strong>: Las ordenes que se generan cuando se compra</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><strong>OrderDetail</strong>: Detalles de la orden de compra</li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dd>
+<p>El siguiente es el <code>models.py</code> de la aplicación <code>sales</code></p>
+</dd>
+</dl>
+<pre><code class="python"># -*- coding:utf-8 -*-
+# models.py
+from django.db import models
+
+class Categories(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    picture = models.ImageField(upload_to=&quot;images&quot;)
+    posted_on = models.DateTimeField(auto_now_add=True)
+
+class Suppliers(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    address = models.CharField(max_length=255)
+    phone = models.CharField(max_length=12)
+    posted_on = models.DateTimeField(auto_now_add=True)
+
+class Products(models.Model):
+    name = models.CharField(max_length=255)
+    value = models.PositiveIntegerField()
+    category = models.ForeignKey(Categories)
+    supplier = mdoels.ForeignKey(Suppliers)
+    unit_price = models.PositiveIntegerField()
+    units_in_stock = models.PositiveIntegerField()
+    discontinued = models.BooleanField(default=True)
+    posted_on = models.DateTimeField(auto_now_add=True)
+
+class Orders(models.Model):
+    description = models.TextField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+class OrderDetail(models.Model):
+    order = models.ForeignKey(Orders)
+    quantity = models.PositiveIntegerField()
+    discount = models.PositiveIntegerField(default=0)
+    created_on = models.DateTimeField(auto_now_add=True)
+</code></pre></body></html>
