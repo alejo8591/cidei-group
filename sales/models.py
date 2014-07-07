@@ -17,7 +17,7 @@ class Products(models.Model):
 	name = models.CharField(max_length=255)
 	value = models.PositiveIntegerField()
 	category = models.ForeignKey(Categories)
-	supplier = mdoels.ForeignKey(Suppliers)
+	supplier = models.ForeignKey(Suppliers)
 	unit_price = models.PositiveIntegerField()
 	units_in_stock = models.PositiveIntegerField()
 	discontinued = models.BooleanField(default=True)

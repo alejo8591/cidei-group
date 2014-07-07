@@ -1,5 +1,7 @@
 ## Aplicación de ejemplo para el Curso `Backend` y `Frontend`, construida en `Django`
 
+> NOTA: Si descarga el proyecto por favor utilizar el archivo `GUIA.html` para tener un referente del proyecto
+
 ### 1. Instalación de Software
 
 #### 1.1. Instalación de Git
@@ -158,4 +160,61 @@ class OrderDetail(models.Model):
 	quantity = models.PositiveIntegerField()
 	discount = models.PositiveIntegerField(default=0)
 	created_on = models.DateTimeField(auto_now_add=True)
+```
+
+##### 2.3.3. Verificando el Modelo de `sales`
+
+  Django provee una serie de comandos para poder verificar el script de `SQL` que crea el [ORM que provee el Framework](https://docs.djangoproject.com/en/1.6/topics/db/):
+	 `(venv)$ python manage.py sqlall sales`
+
+```sql
+BEGIN;
+CREATE TABLE "sales_categories" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "name" varchar(255) NOT NULL,
+    "description" text,
+    "picture" varchar(100) NOT NULL,
+    "posted_on" datetime NOT NULL
+)
+;
+CREATE TABLE "sales_suppliers" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "name" varchar(255) NOT NULL,
+    "description" text,
+    "address" varchar(255) NOT NULL,
+    "phone" varchar(12) NOT NULL,
+    "posted_on" datetime NOT NULL
+)
+;
+CREATE TABLE "sales_products" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "name" varchar(255) NOT NULL,
+    "value" integer unsigned NOT NULL,
+    "category_id" integer NOT NULL REFERENCES "sales_categories" ("id"),
+    "supplier_id" integer NOT NULL REFERENCES "sales_suppliers" ("id"),
+    "unit_price" integer unsigned NOT NULL,
+    "units_in_stock" integer unsigned NOT NULL,
+    "discontinued" bool NOT NULL,
+    "posted_on" datetime NOT NULL
+)
+;
+CREATE TABLE "sales_orders" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "description" text,
+    "created_on" datetime NOT NULL
+)
+;
+CREATE TABLE "sales_orderdetail" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "order_id" integer NOT NULL REFERENCES "sales_orders" ("id"),
+    "quantity" integer unsigned NOT NULL,
+    "discount" integer unsigned NOT NULL,
+    "created_on" datetime NOT NULL
+)
+;
+CREATE INDEX "sales_products_6f33f001" ON "sales_products" ("category_id");
+CREATE INDEX "sales_products_272520ac" ON "sales_products" ("supplier_id");
+CREATE INDEX "sales_orderdetail_68d25c7a" ON "sales_orderdetail" ("order_id");
+
+COMMIT;
 ```

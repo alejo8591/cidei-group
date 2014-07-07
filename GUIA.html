@@ -382,4 +382,76 @@ class OrderDetail(models.Model):
     quantity = models.PositiveIntegerField()
     discount = models.PositiveIntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
+</code></pre>
+
+<h5 id="2-3-3-verificando-el-modelo-de-sales">2.3.3. Verificando el Modelo de <code>sales</code></h5>
+<dl>
+<dd>
+<dl>
+<dt>Django provee una serie de comandos para poder verificar el script de <code>SQL</code> que crea el <a href="https://docs.djangoproject.com/en/1.6/topics/db/">ORM que provee el Framework</a>:</dt>
+<dd><code>(venv)$ python manage.py sqlall sales</code></dd>
+</dl>
+</dd>
+</dl>
+<pre><code class="sql">BEGIN;
+CREATE TABLE &quot;sales_categories&quot; (
+    &quot;id&quot; integer NOT NULL PRIMARY KEY,
+    &quot;name&quot; varchar(255) NOT NULL,
+    &quot;description&quot; text,
+    &quot;picture&quot; varchar(100) NOT NULL,
+    &quot;posted_on&quot; datetime NOT NULL
+)
+;
+CREATE TABLE &quot;sales_suppliers&quot; (
+    &quot;id&quot; integer NOT NULL PRIMARY KEY,
+    &quot;name&quot; varchar(255) NOT NULL,
+    &quot;description&quot; text,
+    &quot;address&quot; varchar(255) NOT NULL,
+    &quot;phone&quot; varchar(12) NOT NULL,
+    &quot;posted_on&quot; datetime NOT NULL
+)
+;
+CREATE TABLE &quot;sales_products&quot; (
+    &quot;id&quot; integer NOT NULL PRIMARY KEY,
+    &quot;name&quot; varchar(255) NOT NULL,
+    &quot;value&quot; integer unsigned NOT NULL,
+    &quot;category_id&quot; integer NOT NULL REFERENCES &quot;sales_categories&quot; (&quot;id&quot;),
+    &quot;supplier_id&quot; integer NOT NULL REFERENCES &quot;sales_suppliers&quot; (&quot;id&quot;),
+    &quot;unit_price&quot; integer unsigned NOT NULL,
+    &quot;units_in_stock&quot; integer unsigned NOT NULL,
+    &quot;discontinued&quot; bool NOT NULL,
+    &quot;posted_on&quot; datetime NOT NULL
+)
+;
+CREATE TABLE &quot;sales_orders&quot; (
+    &quot;id&quot; integer NOT NULL PRIMARY KEY,
+    &quot;description&quot; text,
+    &quot;created_on&quot; datetime NOT NULL
+)
+;
+CREATE TABLE &quot;sales_orderdetail&quot; (
+    &quot;id&quot; integer NOT NULL PRIMARY KEY,
+    &quot;order_id&quot; integer NOT NULL REFERENCES &quot;sales_orders&quot; (&quot;id&quot;),
+    &quot;quantity&quot; integer unsigned NOT NULL,
+    &quot;discount&quot; integer unsigned NOT NULL,
+    &quot;created_on&quot; datetime NOT NULL
+)
+;
+CREATE INDEX &quot;sales_products_6f33f001&quot; ON &quot;sales_products&quot; (&quot;category_id&quot;);
+CREATE INDEX &quot;sales_products_272520ac&quot; ON &quot;sales_products&quot; (&quot;supplier_id&quot;);
+CREATE INDEX &quot;sales_orderdetail_68d25c7a&quot; ON &quot;sales_orderdetail&quot; (&quot;order_id&quot;);
+
+COMMIT;
+</code></pre>
+
+<h5 id="2-3-4-sincronizando-el-modelo-de-sales">2.3.4. Sincronizando el Modelo de <code>sales</code></h5>
+<dl>
+<dd>Para sincronizar los modelos el Django es necesario verificar la configuración en el <code>settings.py</code> en el diccionario llamado <code>DATABASES</code>, por el momento se utilizara <code>SQLite3</code>:</dd>
+</dl>
+<pre><code class="python">DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'cidei.sqlite3'),
+    }
+}
 </code></pre></body></html>

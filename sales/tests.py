@@ -1,3 +1,5 @@
 from django.test import TestCase
 
-# Create your tests here.
+class TestSales(TestCase):
+	def setUp(self):
+		pass
