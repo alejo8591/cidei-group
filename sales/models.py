@@ -1,4 +1,5 @@
 from django.db import models
+# http://i.msdn.microsoft.com/dynimg/IC141637.gif
 
 class Categories(models.Model):
 	name = models.CharField(max_length=255)
