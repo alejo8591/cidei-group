@@ -55,7 +55,9 @@ WSGI_APPLICATION = 'food_store.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-# Fix for MacOSX: https://racingtadpole.com/blog/mamp-python-and-mysqldb/
+# MySQL on Mac OS X: http://www.macminivault.com/mysql-mountain-lion/
+# http://stackoverflow.com/questions/4559699/python-mysqldb-and-library-not-loaded-libmysqlclient-16-dylib
+# Other options for MAMP: https://racingtadpole.com/blog/mamp-python-and-mysqldb/
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -69,7 +71,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
 TIME_ZONE = 'UTC'
 
