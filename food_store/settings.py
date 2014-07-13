@@ -86,3 +86,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+# Path Media files for Develop
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# constant for handling routes for pictures of the fixtures
+TEST_IMAGES_SALES_APP = os.path.join(BASE_DIR, 'sales/fixtures/images')

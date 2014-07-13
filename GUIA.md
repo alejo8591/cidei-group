@@ -229,3 +229,7 @@ DATABASES = {
 ```
 :  Ahora si llevamos a cabo la sincronización:
 	: `python manage.py syncdb`
+
+##### 2.3.5. Test del Modelo de `sales`
+
+: Es necesario realizar test del software que se esta desarrollando, pues la calidad y la madurez serán mucho mejor. Para este caso utilizamos TDD (Test Driven Development, en este enlace una excelente referencia)[http://www.dirigidoportests.com/wp-content/uploads/2009/12/disenoAgilConTDD.pdf] a través de Python en Django. Para los tes utilizaremos el script `test.py`, que define Django para este proposito:

@@ -10,3 +10,11 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 )
+# URLs for Media files for Develop
+if settings.DEBUG:
+	urlpatterns+= patterns(
+		'django.views.static',
+		(r'media/(?P<path>.*)',
+		'serve',
+		{'document_root' : settings.MEDIA_ROOT}), 
+	)	
