@@ -218,3 +218,43 @@ CREATE INDEX "sales_orderdetail_68d25c7a" ON "sales_orderdetail" ("order_id");
 
 COMMIT;
 ```
+
+#### **Nota:** Por favor revisar en [github el tag v0.1.0](https://github.com/alejo8591/cidei-group/releases/tag/v0.1.0) de la aplicación de ejemplo 
+
+##### 2.3.4. Sincronizando el Modelo de `sales`
+
+  Para sincronizar los modelos el Django es necesario verificar la configuración en el `settings.py` en el diccionario llamado `DATABASES`, por el momento se utilizara `SQLite3`:
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'cidei.sqlite3'),
+    }
+}
+```
+  Ahora si llevamos a cabo la sincronización:
+   `python manage.py syncdb`
+
+##### 2.3.5. Test del Modelo de `sales`
+
+ Es necesario realizar test del software que se esta desarrollando, pues la calidad y la madurez serán mucho mejor. Para este caso utilizamos TDD [Test Driven Development, en este enlace una excelente referencia](http://www.dirigidoportests.com/wp-content/uploads/2009/12/disenoAgilConTDD.pdf) a través de Python en Django. Para los tes utilizaremos el script `test.py`, que define Django para este proposito.
+
+#### **Nota:** Por favor revisar en [github el tag v0.2.0](https://github.com/alejo8591/cidei-group/releases/tag/v0.2.0) de la aplicación de ejemplo 
+
+
+##### 2.3.6. Cargando datos de prueba al Modelo de `sales`
+
+ Muchas veces es necesario en desarrollo cargar datos de prueba para verificar el comportamiento de la información, para tener información de prueba y poder trabajar, entre otras razones (...), para esto utilizamos la aplicación `django-autofixture`. 
+ > Esta aplicación tiene como objetivo proporcionar una forma sencilla de cargar datos masivos de prueba generados aleatoriamente en la base de datos de desarrollo. 
+
+###### 2.3.6.1 Instalando `django-autofixture`
+
+ Es necesario instalar el paquete `django-autofixture` para incluir en el proyecto:
+   * `(venv)$ pip install django-autifxture`
+   * Luego lo agregamos a las dependencias del proyecto `(venv)$ pip freeze > requirements.txt`
+   * Ahora es necesario adicionarlo a la tupla `INSTALLED_APPS` del `settings.py` del proyecto.
+   * Por ultimo adicionamos en la aplicación especifica, es este caso `sales` la configuración especifica para generar los datos aleatorios. Este script tiene un nombre designado y es `autofixtures.py` 
+ **Nota:** Si tiene problemas con las librerias de imagenes en diferentes Sistemas Operativos, puede consultar los siguientes enlaces:
+  * [Enlace para Mac OS X](http://mac-dev-env.patrickbougie.com/)
+  * [Problemas con ImageMagick](http://stackoverflow.com/questions/7412208/imagemagick-and-os-x-lion-trouble)
+
