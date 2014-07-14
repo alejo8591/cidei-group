@@ -69,6 +69,8 @@ h4:hover a span.headeranchor:before { content: '\f05c'; }
 h5:hover a span.headeranchor:before { content: '\f05c'; }
 h6:hover a span.headeranchor:before { content: '\f05c'; }
 
+abbr { cursor: pointer; }
+
 /* Paragraphs */
 p { margin:1em 0; }
 
@@ -114,7 +116,7 @@ span.backtick {
 
 pre, code, kbd, samp {
   color: #000;
-  font-family: monospace;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -130,15 +132,57 @@ pre {
   padding: 10px;
 }
 
-pre code { border: 0 }
-
 code { padding: 0 3px 0 3px; }
+pre code { border: 0; padding: 0; }
 
-/* Multimarkdown Critic Blocks */
-span.critic_mark { background: #ff0; }
-span.critic_delete { color: #c82829; text-decoration: line-through; }
-span.critic_insert { color: #718c00 ; text-decoration: underline; }
-span.critic_comment { color: #8e908c; font-style: italic; }
+/* Admonition */
+div.admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  font-size: 0.88em;
+  padding: 0.5em 1em 0.5em 1em;
+  margin: 10px auto;
+}
+
+div.admonition p {
+  padding: 0;
+  margin: 0.5em 0 0.5em 0;
+}
+
+p.admonition-title {
+  font-weight: bold;
+}
+
+div.admonition.attention {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  border: 1px solid #4F8A10;
+}
+
+div.admonition.caution {
+  color: #9F6000;
+  background-color: #FEEFB3;
+  border: 1px solid #9F6000;
+}
+
+div.admonition.hint {
+  color: #00529B;
+  background-color: #BDE5F8;
+  border: 1px solid #00529B;
+}
+
+div.admonition.danger {
+  color: #D8000C;
+  background-color: #FFBABA;
+  border: 1px solid #D8000C;
+}
+
+div.admonition.note {
+  color: #888888;
+  background-color: #F8F8F8;
+  border: 1px solid #888888;
+}
 
 /* Inlines */
 b, strong { font-weight: bold; }
@@ -154,15 +198,15 @@ sub { bottom: -0.25em; }
 dfn { font-style: italic; }
 
 /* Lists */
-ul, ol { margin: 0.5em 0; padding: 0 0 0 2em; }
+ul, ol { padding-left: 30px; }
 li p:last-child { margin:0 }
-li.task-list-item { list-style-type: none; margin-left: -1.5em; }
-li.task-list-item input { margin-right: .5em; }
-li.task-list-item ul, li.task-list-item ol { margin-left: 1.5em; }
+li.task-list-item { list-style-type: none; }
+li.task-list-item input { float:left; margin-left: -20px; margin-top: 6px; }
+dt { font-weight: bold; font-style: italic;}
 dd { margin: 0 0 0 2em; }
 
 /* Tables */
-table { border-collapse: collapse; border: 1px solid #ddd; }
+table { border-collapse: collapse; border: 1px solid #ddd; background-color: #fefefe; }
 table tr:nth-child(2n) { background-color: #f8f8f8; }
 td, th { border: 1px solid #ddd; padding: 6px 13px; }
 
@@ -553,6 +597,7 @@ CREATE INDEX &quot;sales_orderdetail_68d25c7a&quot; ON &quot;sales_orderdetail&q
 COMMIT;
 </code></pre>
 
+<h4 id="nota-por-favor-revisar-en-github-el-tag-v010-de-la-aplicacion-de-ejemplo"><strong>Nota:</strong> Por favor revisar en <a href="https://github.com/alejo8591/cidei-group/releases/tag/v0.1.0">github el tag v0.1.0</a> de la aplicación de ejemplo</h4>
 <h5 id="234-sincronizando-el-modelo-de-sales"><a name="user-content-234-sincronizando-el-modelo-de-sales" href="#234-sincronizando-el-modelo-de-sales" class="headeranchor-link"  aria-hidden="true"><span class="headeranchor"></span></a>2.3.4. Sincronizando el Modelo de <code>sales</code></h5>
 <dl>
 <dd>Para sincronizar los modelos el Django es necesario verificar la configuración en el <code>settings.py</code> en el diccionario llamado <code>DATABASES</code>, por el momento se utilizara <code>SQLite3</code>:</dd>
@@ -572,5 +617,52 @@ COMMIT;
 </dl>
 <h5 id="235-test-del-modelo-de-sales"><a name="user-content-235-test-del-modelo-de-sales" href="#235-test-del-modelo-de-sales" class="headeranchor-link"  aria-hidden="true"><span class="headeranchor"></span></a>2.3.5. Test del Modelo de <code>sales</code></h5>
 <dl>
-<dd>Es necesario realizar test del software que se esta desarrollando, pues la calidad y la madurez serán mucho mejor. Para este caso utilizamos TDD (Test Driven Development, en este enlace una excelente referencia)[<a href="http://www.dirigidoportests.com/wp-content/uploads/2009/12/disenoAgilConTDD.pdf">http://www.dirigidoportests.com/wp-content/uploads/2009/12/disenoAgilConTDD.pdf</a>] a través de Python en Django. </dd>
+<dd>Es necesario realizar test del software que se esta desarrollando, pues la calidad y la madurez serán mucho mejor. Para este caso utilizamos TDD <a href="http://www.dirigidoportests.com/wp-content/uploads/2009/12/disenoAgilConTDD.pdf">Test Driven Development, en este enlace una excelente referencia</a> a través de Python en Django. Para los tes utilizaremos el script <code>test.py</code>, que define Django para este proposito.</dd>
+</dl>
+<h4 id="nota-por-favor-revisar-en-github-el-tag-v020-de-la-aplicacion-de-ejemplo"><strong>Nota:</strong> Por favor revisar en <a href="https://github.com/alejo8591/cidei-group/releases/tag/v0.2.0">github el tag v0.2.0</a> de la aplicación de ejemplo</h4>
+<h5 id="236-cargando-datos-de-prueba-al-modelo-de-sales"><a name="user-content-236-cargando-datos-de-prueba-al-modelo-de-sales" href="#236-cargando-datos-de-prueba-al-modelo-de-sales" class="headeranchor-link"  aria-hidden="true"><span class="headeranchor"></span></a>2.3.6. Cargando datos de prueba al Modelo de <code>sales</code></h5>
+<dl>
+<dd>Muchas veces es necesario en desarrollo cargar datos de prueba para verificar el comportamiento de la información, para tener información de prueba y poder trabajar, entre otras razones (&hellip;), para esto utilizamos la aplicación <code>django-autofixture</code>. </dd>
+<dd>
+<blockquote>
+<p>Esta aplicación tiene como objetivo proporcionar una forma sencilla de cargar datos masivos de prueba generados aleatoriamente en la base de datos de desarrollo. </p>
+</blockquote>
+</dd>
+</dl>
+<h6 id="2361-instalando-django-autofixture"><a name="user-content-2361-instalando-django-autofixture" href="#2361-instalando-django-autofixture" class="headeranchor-link"  aria-hidden="true"><span class="headeranchor"></span></a>2.3.6.1 Instalando <code>django-autofixture</code></h6>
+<dl>
+<dd>Es necesario instalar el paquete <code>django-autofixture</code> para incluir en el proyecto:</dd>
+<dd>
+<ul>
+<li><code>(venv)$ pip install django-autifxture</code></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>Luego lo agregamos a las dependencias del proyecto <code>(venv)$ pip freeze &gt; requirements.txt</code></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>Ahora es necesario adicionarlo a la tupla <code>INSTALLED_APPS</code> del <code>settings.py</code> del proyecto.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>Por ultimo adicionamos en la aplicación especifica, es este caso <code>sales</code> la configuración especifica para generar los datos aleatorios. Este script tiene un nombre designado y es <code>autofixtures.py</code> </li>
+</ul>
+</dd>
+<dd>
+<p><strong>Nota:</strong> Si tiene problemas con las librerias de imagenes en diferentes Sistemas Operativos, puede consultar los siguientes enlaces:</p>
+</dd>
+<dd>
+<ul>
+<li><a href="http://mac-dev-env.patrickbougie.com/">Enlace para Mac OS X</a></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><a href="http://stackoverflow.com/questions/7412208/imagemagick-and-os-x-lion-trouble">Problemas con ImageMagick</a></li>
+</ul>
+</dd>
 </dl></body></html>
