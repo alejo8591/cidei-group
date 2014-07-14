@@ -258,3 +258,5 @@ DATABASES = {
   * [Enlace para Mac OS X](http://mac-dev-env.patrickbougie.com/)
   * [Problemas con ImageMagick](http://stackoverflow.com/questions/7412208/imagemagick-and-os-x-lion-trouble)
 
+  #### **Nota:** Por favor revisar en [github el tag v0.3.0](https://github.com/alejo8591/cidei-group/releases/tag/v0.3.0) de la aplicación de ejemplo
+
